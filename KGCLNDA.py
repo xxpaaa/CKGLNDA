@@ -39,7 +39,7 @@ class KGCLNDA(nn.Module):
         nn.init.xavier_normal_(self.relation_embed.weight)
 
         if args.kg_type == 'TF':
-            self.kg_dropout = eval(args.kg_dropout)  # KGAETCDA特有的
+            self.kg_dropout = eval(args.kg_dropout)
 
             kg_dropout_dict = {
                 'dr_enc': self.kg_dropout[0],
@@ -114,7 +114,7 @@ class KGCLNDA(nn.Module):
         neg_score = torch.sum(circ_embed*dis_neg_embed, dim=1)   
 
         ap_loss = F.softplus(neg_score - pos_score)
-        # ap_loss = (-1.0) * F.logsigmoid(pos_score - neg_score) #也可以换这个loss试试效果
+        # ap_loss = (-1.0) * F.logsigmoid(pos_score - neg_score)
         ap_loss = torch.mean(ap_loss)
 
         loss = ap_loss
